@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Support Ticket Triage Assistant — Interview Guide</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --paper: #ffffff;
+      --ink: #172033;
+      --muted: #647086;
+      --line: #dfe5ef;
+      --blue: #315efb;
+      --blue-soft: #eaf0ff;
+      --green: #16845b;
+      --green-soft: #e8f7f0;
+      --orange: #b96818;
+      --orange-soft: #fff2df;
+      --red: #b84242;
+      --red-soft: #fff0f0;
+      --shadow: 0 18px 45px rgba(31, 45, 80, .09);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.65 Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif; }
+    a { color: var(--blue); }
+    .hero { background: radial-gradient(circle at 75% 15%, #607dff 0, #315efb 34%, #18275a 100%); color: #fff; padding: 72px 24px 80px; }
+    .wrap { max-width: 1120px; margin: 0 auto; }
+    .eyebrow { text-transform: uppercase; letter-spacing: .16em; font-size: 12px; font-weight: 800; opacity: .78; }
+    h1 { font-size: clamp(36px, 6vw, 68px); line-height: 1.04; max-width: 850px; margin: 18px 0; letter-spacing: -.05em; }
+    .hero p { font-size: 19px; max-width: 780px; color: #e6ebff; }
+    .hero-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 42px; align-items: end; }
+    .hero-card { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); border-radius: 22px; padding: 24px; backdrop-filter: blur(12px); }
+    .hero-card strong { display: block; font-size: 30px; line-height: 1.1; }
+    main { padding: 42px 24px 80px; }
+    section { margin: 0 0 34px; }
+    .paper { background: var(--paper); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: clamp(24px, 4vw, 42px); }
+    h2 { font-size: 30px; letter-spacing: -.03em; margin: 0 0 8px; }
+    h3 { font-size: 21px; margin: 26px 0 8px; letter-spacing: -.02em; }
+    .lead { color: var(--muted); margin-top: 0; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .stat { padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: #fbfcff; }
+    .stat b { display: block; font-size: 22px; color: var(--blue); }
+    .diagram { margin: 24px 0; padding: 20px; background: #101a35; color: #fff; border-radius: 18px; overflow-x: auto; }
+    .flow { display: flex; align-items: center; gap: 10px; min-width: 780px; }
+    .node { min-width: 145px; padding: 14px 12px; text-align: center; border-radius: 14px; border: 1px solid rgba(255,255,255,.2); background: #1d2b50; }
+    .node.blue { background: #315efb; }
+    .node.green { background: #16845b; }
+    .node.orange { background: #a95e18; }
+    .arrow { color: #8fa5ff; font-size: 25px; }
+    .branch { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; min-width: 760px; }
+    .branch > div { border-radius: 14px; padding: 16px; border: 1px solid rgba(255,255,255,.18); }
+    .branch .yes { background: rgba(22,132,91,.3); }
+    .branch .no { background: rgba(185,104,24,.3); }
+    .code { background: #101a35; color: #e4eaff; border-radius: 14px; padding: 18px 20px; overflow: auto; font: 13px/1.65 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .callout { border-left: 5px solid var(--blue); background: var(--blue-soft); padding: 16px 18px; border-radius: 10px; margin: 18px 0; }
+    .callout.green { border-color: var(--green); background: var(--green-soft); }
+    .callout.orange { border-color: var(--orange); background: var(--orange-soft); }
+    .callout.red { border-color: var(--red); background: var(--red-soft); }
+    table { width: 100%; border-collapse: collapse; margin: 18px 0; }
+    th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+    ul { padding-left: 22px; }
+    .q { border-top: 1px solid var(--line); padding: 24px 0 6px; }
+    .q:first-of-type { border-top: 0; padding-top: 4px; }
+    .q-number { color: var(--blue); font-weight: 800; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+    .answer { font-size: 17px; }
+    details { border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin-top: 14px; background: #fbfcff; }
+    summary { cursor: pointer; font-weight: 700; }
+    footer { text-align: center; color: var(--muted); padding: 12px 24px 45px; }
+    @media (max-width: 820px) { .hero-grid, .grid { grid-template-columns: 1fr; } .hero-card { max-width: 420px; } }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Fresher interview preparation</div>
+        <h1>AI Support Ticket Triage Assistant</h1>
+        <p>A practical explanation of the architecture, AI workflow, retrieval pipeline, validation, and human-review process—written as interview-ready answers.</p>
+      </div>
+      <div class="hero-card">
+        <span class="eyebrow">Core idea</span>
+        <strong>AI drafts.<br />Rules decide.<br />Humans approve risk.</strong>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="paper">
+        <h2>One-minute project explanation</h2>
+        <p class="lead">Use this when the interviewer asks, “Tell me about your project.”</p>
+        <div class="callout">
+          The system receives a support ticket through Streamlit and FastAPI. It stores the ticket in PostgreSQL, uses LangChain and an LLM to classify the category, urgency, and intent, retrieves related FAQ content from ChromaDB, and generates a source-grounded draft response. A validation step checks whether the draft is supported by the FAQ. Safe tickets can be answered automatically, while refunds, payments, security issues, critical tickets, and uncertain answers are sent to a human agent. The agent can approve, edit, or reject the draft, and only the approved response becomes the final response.
+        </div>
+        <div class="grid">
+          <div class="stat"><b>Streamlit</b>Customer and agent interface</div>
+          <div class="stat"><b>FastAPI</b>Backend API and workflow entry point</div>
+          <div class="stat"><b>LangChain</b>AI workflow orchestration</div>
+          <div class="stat"><b>ChromaDB</b>Semantic FAQ retrieval</div>
+          <div class="stat"><b>PostgreSQL</b>Official ticket and review records</div>
+          <div class="stat"><b>Human review</b>Final control for risky cases</div>
+        </div>
+      </section>
+
+      <section class="paper">
+        <h2>Architecture at a glance</h2>
+        <p class="lead">The ticket moves through analysis, retrieval, generation, validation, and a final decision.</p>
+        <div class="diagram">
+          <div class="flow">
+            <div class="node blue">Customer<br />submits ticket</div><div class="arrow">→</div>
+            <div class="node">FastAPI<br />validates + stores</div><div class="arrow">→</div>
+            <div class="node">LangChain<br />classifier</div><div class="arrow">→</div>
+            <div class="node">ChromaDB<br />retrieves FAQ</div><div class="arrow">→</div>
+            <div class="node">LLM drafts<br />response</div><div class="arrow">→</div>
+            <div class="node">Validator +<br />rules</div>
+          </div>
+          <div class="branch">
+            <div class="yes"><b>Safe and supported</b><br />Store as final response and answer automatically.</div>
+            <div class="no"><b>Sensitive or uncertain</b><br />Place in the human review queue.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="paper">
+        <h2>12 important interview questions</h2>
+
+        <article class="q"><div class="q-number">Question 01</div><h3>Explain the complete ticket flow.</h3>
+          <p class="answer">A customer submits a subject and description. FastAPI validates the request and stores the original ticket in PostgreSQL. The classifier predicts category, urgency, and intent. The retriever searches ChromaDB for relevant FAQ sections. LangChain sends the ticket and retrieved context to the LLM, which generates a draft. A validator checks whether the draft is grounded. Finally, escalation rules either allow an automatic response or send the draft to a human agent.</p>
+          <div class="diagram"><div class="flow"><div class="node blue">Submit</div><div class="arrow">→</div><div class="node">Store</div><div class="arrow">→</div><div class="node">Classify</div><div class="arrow">→</div><div class="node">Retrieve</div><div class="arrow">→</div><div class="node">Generate</div><div class="arrow">→</div><div class="node orange">Decide</div></div></div>
+        </article>
+
+        <article class="q"><div class="q-number">Question 02</div><h3>Where does LangChain fit?</h3>
+          <p class="answer">LangChain is the orchestration layer. It connects prompts to the LLM, requests structured outputs, connects retrieval context to the generation prompt, and runs the validation chain. It does not replace FastAPI, PostgreSQL, or ChromaDB. The LLM performs language understanding; LangChain organizes the calls and data flow.</p>
+          <div class="code">Ticket → PromptTemplate → ChatOpenAI → ClassificationResult
+Ticket → Retriever → FAQ context → PromptTemplate → ChatOpenAI → Draft
+Draft + FAQ context → Validation prompt → ValidationResult</div>
+        </article>
+
+        <article class="q"><div class="q-number">Question 03</div><h3>How does classification work?</h3>
+          <p class="answer">The classifier receives the subject and description. A prompt defines the allowed categories and urgency values. The LLM returns structured JSON containing category, urgency, intent, confidence, and summary. Pydantic validates that output. Deterministic business rules then escalate sensitive intents such as refunds, payments, security incidents, privacy requests, legal questions, and complaints.</p>
+          <div class="code">Input:  “I was charged twice and want a refund.”
+Output: {
+  "category": "billing",
+  "urgency": "high",
+  "intent": "duplicate_charge",
+  "confidence": 0.94
+}</div>
+        </article>
+
+        <article class="q"><div class="q-number">Question 04</div><h3>What is RAG?</h3>
+          <p class="answer">RAG means Retrieval-Augmented Generation. Instead of asking the LLM to answer from general knowledge, the system first retrieves relevant company FAQ content and gives it to the LLM as context. The model then drafts an answer using that context. This reduces hallucinations and makes the response traceable to company documents.</p>
+          <div class="diagram"><div class="flow"><div class="node blue">Ticket</div><div class="arrow">→</div><div class="node">Embedding</div><div class="arrow">→</div><div class="node">FAQ search</div><div class="arrow">→</div><div class="node green">Context</div><div class="arrow">→</div><div class="node">LLM answer</div></div></div>
+        </article>
+
+        <article class="q"><div class="q-number">Question 05</div><h3>What does ChromaDB store?</h3>
+          <p class="answer">ChromaDB stores vector representations of FAQ sections and their metadata. Each FAQ section becomes a searchable document containing the source filename, section name, content, and embedding. When a ticket arrives, its text is compared with those vectors and the most semantically similar sections are returned.</p>
+          <table><tr><th>Stored item</th><th>Example</th></tr><tr><td>Source</td><td>billing_faq.md</td></tr><tr><td>Section</td><td>Duplicate charges</td></tr><tr><td>Content</td><td>Duplicate charges are investigated by the billing team.</td></tr><tr><td>Score</td><td>0.88 relevance</td></tr></table>
+        </article>
+
+        <article class="q"><div class="q-number">Question 06</div><h3>Who validates the answer?</h3>
+          <p class="answer">There are two layers. First, an AI validation chain checks whether the generated answer is supported by the retrieved FAQ and returns supported, confidence, and unsupported claims. Second, a human agent is the final authority for refunds, payments, security, complaints, critical cases, and uncertain answers. AI validation supports the workflow; it does not replace human approval for risky cases.</p>
+          <div class="callout orange"><b>Important:</b> generation creates a draft; validation checks the draft; the escalation policy decides whether human approval is required.</div>
+        </article>
+
+        <article class="q"><div class="q-number">Question 07</div><h3>Why are refunds sent to a human?</h3>
+          <p class="answer">A refund can have financial consequences and may require payment verification, policy interpretation, or fraud checks. The AI can summarize the issue and draft a response, but it should not promise or approve a refund. The ticket is therefore placed in <code>waiting_for_review</code> until a support agent makes the final decision.</p>
+        </article>
+
+        <article class="q"><div class="q-number">Question 08</div><h3>What is the difference between draft and final response?</h3>
+          <p class="answer"><code>draft_response</code> is generated by the AI and may still need review. <code>final_response</code> is the message approved for the customer. For safe tickets, the draft can become final automatically. For sensitive tickets, final_response remains empty until an agent approves or edits the draft.</p>
+          <table><tr><th>Field</th><th>Meaning</th><th>Who controls it?</th></tr><tr><td>draft_response</td><td>AI suggestion</td><td>AI</td></tr><tr><td>final_response</td><td>Approved customer message</td><td>Rules or human agent</td></tr></table>
+        </article>
+
+        <article class="q"><div class="q-number">Question 09</div><h3>What happens when no FAQ matches?</h3>
+          <p class="answer">The retriever returns no useful context or a score below the configured threshold. The validator marks the answer as unsupported or low-confidence. The escalation policy then sets the ticket to <code>waiting_for_review</code> with a reason such as <code>no_relevant_faq</code>. The system must not invent an answer from missing knowledge.</p>
+          <div class="callout red">No verified context → no automatic answer → human review.</div>
+        </article>
+
+        <article class="q"><div class="q-number">Question 10</div><h3>How do approve, edit, and reject actions work?</h3>
+          <p class="answer">The agent sees pending tickets in the Streamlit review page. Approve copies the AI draft into final_response. Edit stores the agent’s rewritten response as final_response. Reject leaves final_response empty and keeps the ticket in review. Each action is recorded in the reviews table with reviewer ID, action, comments, and timestamp.</p>
+          <div class="diagram"><div class="flow"><div class="node orange">AI draft</div><div class="arrow">→</div><div class="node">Agent decision</div><div class="arrow">→</div><div class="node green">final_response</div></div><div class="branch"><div class="yes"><b>Approve / Edit</b><br />status = answered</div><div class="no"><b>Reject</b><br />status remains waiting_for_review</div></div></div>
+        </article>
+
+        <article class="q"><div class="q-number">Question 11</div><h3>Why use PostgreSQL and ChromaDB separately?</h3>
+          <p class="answer">They solve different problems. PostgreSQL is the source of truth for structured business data: tickets, statuses, reviews, responses, and audit history. ChromaDB is optimized for semantic similarity search over unstructured FAQ content. PostgreSQL answers “What is the ticket’s current status?” while ChromaDB answers “Which FAQ content is most relevant?”</p>
+          <div class="grid"><div class="stat"><b>PostgreSQL</b>Structured records, relationships, transactions, audit history</div><div class="stat"><b>ChromaDB</b>Embeddings, vector similarity, semantic FAQ retrieval</div><div class="stat"><b>Together</b>Reliable workflow plus grounded AI context</div></div>
+        </article>
+
+        <article class="q"><div class="q-number">Question 12</div><h3>What are the limitations of the current prototype?</h3>
+          <p class="answer">The prototype uses synchronous processing, demo roles instead of full authentication, seeded FAQ documents, and mock AI fallback. The mock validator is simplified, so production should use stronger grounding checks and evaluation. It also needs real email or CRM integration, background workers, attachment scanning, rate limiting, PII masking, model monitoring, database migrations, and a larger labeled evaluation dataset.</p>
+          <details><summary>Good improvement roadmap</summary><ul><li>Add JWT authentication and role-based access.</li><li>Move processing to Celery or a queue.</li><li>Add independent answer evaluation and regression tests.</li><li>Integrate email, Zendesk, or Salesforce.</li><li>Add FAQ versioning and admin upload workflow.</li><li>Measure classification accuracy, grounded-answer rate, escalation rate, and human correction rate.</li></ul></details>
+        </article>
+      </section>
+
+      <section class="paper">
+        <h2>Final interview summary</h2>
+        <p class="answer">The project follows a controlled AI workflow: the LLM proposes a classification and response, retrieval provides company-specific evidence, validation checks grounding, deterministic rules identify risk, and a human agent controls sensitive outcomes. This design makes the system useful while preventing unsupported or financially risky answers from being sent automatically.</p>
+        <div class="callout green"><b>Memorize this line:</b> “AI drafts, retrieval grounds the answer, rules decide whether automation is safe, and humans approve sensitive cases.”</div>
+      </section>
+    </div>
+  </main>
+  <footer>AI Support Ticket Triage Assistant · Interview Guide</footer>
+</body>
+</html>
